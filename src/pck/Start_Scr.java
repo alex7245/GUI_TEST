@@ -1,3 +1,6 @@
+package pck;
+import static pck.SystemUtil.ERR;
+import static pck.SystemUtil.STD;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,11 +12,14 @@ import java.awt.FlowLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JSplitPane;
 import javax.swing.SpringLayout;
+import javax.swing.SwingUtilities;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JComboBox;
 import com.jgoodies.forms.layout.FormLayout;
@@ -31,9 +37,11 @@ public class Start_Scr implements ActionListener{
 	private JButton btnSettings;
 	/**
 	 * Launch the application.
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					Start_Scr window = new Start_Scr();
@@ -44,7 +52,22 @@ public class Start_Scr implements ActionListener{
 			}
 		});
 	}
+	
+//	public static void main(String[] args) throws IOException, InterruptedException {
+//		//String[] ret = SystemUtil.exec("cmd /c ipconfig|find/i USU && rasdial USU /disconnect || rasdial USU aptuser1 Password1");
+//		String[] ret = SystemUtil.exec(new String[] {"cmd", "/c", "ipconfig|find/i", "\"USU\"", "&&", "rasdial", "USU", "/disconnect", "||", "rasdial", "USU", "aptuser1", "Password1"});
+//		if (ret[ERR].isEmpty()) {
+//			System.out.println(ret[STD]);
+//		} else {
+//			System.out.println("ERROR");
+//			System.out.println(ret[ERR]);
+//		}
+//	}
 
+//	public static void main(String[] args) {
+//		System.out.println(System.getProperty("user.home"));
+//	}
+	
 	/**
 	 * Create the application.
 	 */
@@ -101,12 +124,14 @@ public class Start_Scr implements ActionListener{
 		
 	}
 	
+	private ActionListener driveActionListener = new ActionListener(){
+		public void actionPerformed(ActionEvent e){	
+			driveButton();
+		}
+	};
+	
 	private void setActionListeners(){
-		btnDrives.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){	
-				driveButton();
-			}
-		});
+		btnDrives.addActionListener(driveActionListener);
 		btnClient.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				 clientButton();
